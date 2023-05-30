@@ -8,7 +8,6 @@ import SvgToCommands, {
 } from "../algorithm/SvgToCommands";
 import PathShape from "../dataTypes/PathShape";
 import { flatten, zip, zipWith } from "lodash";
-import UIGenerationMenu from "../uiGenerationShapeMenu/uiGenerationMenu";
 
 const viewScale = 10;
 const handleSize = 10;
@@ -241,7 +240,7 @@ export class DrawingApp {
   //     const shapeCommands = this.shapes.map(s => this.getCommands(s));
   //     const shapePaths = shapeCommands.map(sc => SvgToCommands._commandsToPath(sc));
   //     const shapeLines = shapePaths.map(sp => new PathShape("", sp, [], []).getLineStrips()[0]);
-  //     const clicked = shapeLines.filter(p => UIGenerationMenu.pointInPolygon(pos, p));
+  //     const clicked = shapeLines.filter(p => pointInPolygon(pos, p));
   //     if(clicked.length > 0) {
   //         const index = shapeLines.indexOf(clicked[0]);
   //         const shape = this.shapes[index];

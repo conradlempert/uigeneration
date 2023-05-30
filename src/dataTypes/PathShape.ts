@@ -4,7 +4,6 @@ import SvgToCommands, {
   LineCommand,
 } from "../algorithm/SvgToCommands";
 import AutoShape from "./AutoShape";
-import UIGenerationMenu from "../uiGenerationShapeMenu/uiGenerationMenu";
 import { AABB2D } from "../uiGenerationShapeMenu/svgToImage";
 import { CoincidentConstraint } from "../algorithm/shapeDetect/constraints/CoincidentConstraint";
 
@@ -122,7 +121,8 @@ export default class PathShape {
 
   public getLineStrips(): Vector2[][] | null {
     if (this.path) {
-      return [UIGenerationMenu.linearizeCommandLoop(this.commands)];
+      // TODO JULIAN: find library that linearizes for us
+      return [linearizeCommandLoop(this.commands)];
     }
     return null;
   }

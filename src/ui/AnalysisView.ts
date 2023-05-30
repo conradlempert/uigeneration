@@ -9,7 +9,6 @@ import SVGCommandView from "./SVGCommandView";
 import ResultDisplay from "./ResultDisplay";
 import AutoShape from "../dataTypes/AutoShape";
 import SvgDocument from "../dataTypes/SvgDocument";
-import UIGenerationMenu from "../uiGenerationShapeMenu/uiGenerationMenu";
 import SvgToImage, { AABB2D } from "../uiGenerationShapeMenu/svgToImage";
 
 const size = 300;
@@ -271,7 +270,8 @@ export default class AnalysisView {
     const polygons = Array.from(pixelSpaceSegmentOutlinesMap.keys());
     const clickPoint = new Vector2(e.offsetX, e.offsetY);
     const clicked = polygons.filter((p) =>
-      UIGenerationMenu.pointInPolygon(clickPoint, p)
+      // TODO JULIAN: FIND LIBRARY THAT DOES POINT IN POLYGON FOR US
+      pointInPolygon(clickPoint, p)
     );
     const indices = clicked.map((c) => polygons.indexOf(c));
     const clickedLineStrips = indices.map((i) => polygons[i]);

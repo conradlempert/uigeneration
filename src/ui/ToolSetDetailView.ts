@@ -7,7 +7,6 @@ import { DrawingApp } from "./DrawingApp";
 import { FileHandling } from "../util/FileHandling";
 import SvgToImage from "../uiGenerationShapeMenu/svgToImage";
 import { Vector2 } from "three";
-import UIGenerationMenu from "../uiGenerationShapeMenu/uiGenerationMenu";
 
 const size = 300;
 export default class ToolSetDetailView {
@@ -43,21 +42,6 @@ export default class ToolSetDetailView {
     headline.innerText = "Toolset details";
     headline.style.display = "inline-block";
     topBar.appendChild(headline);
-
-    const createDrawingProgramButton = document.createElement("button");
-    createDrawingProgramButton.id = "createDrawingProgram";
-    createDrawingProgramButton.innerText = "Create drawing program";
-    createDrawingProgramButton.style.marginTop = "40px";
-    createDrawingProgramButton.addEventListener("click", async (e) => {
-      document.getElementById("toolCoverageWrapper").remove();
-      for (const tool of this.tools) {
-        await tool.getIconAsPngUrl();
-      }
-      const json = JSON.stringify(this.tools.map((t) => t.serialize()));
-      closeUIGenerationAndShowSketcher();
-      UIGenerationMenu.loadJson("test", json);
-    });
-    topBar.appendChild(createDrawingProgramButton);
 
     const exportButton = document.createElement("button");
     exportButton.id = "exportButton";
