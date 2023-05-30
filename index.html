@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+    <script>window.global = window;</script>
+    <script type="module">
+        import process from "process";
+        import { Buffer } from "buffer";
+        import EventEmitter from "events";
+        window.Buffer = Buffer;
+        window.process = process;
+        window.EventEmitter = EventEmitter;
+    </script>
+  </head>
+  <body>
+    <div id="uiWrapper" style="width:100%; height:100%; z-index: 3; background-color:white; position:fixed;"><span>Drag in SVG Files to start</span> <button id="showSketcher">Show sketcher</button></div>
+  <canvas id="resultCanvas"></canvas>
+  <canvas id="chartCanvas"></canvas>
+  <div id="resultDisplayWrapper" style="z-index: 20000; background-color: white; color: black;">
+    <div class="toolsetInfo" id="toolsetInfo">
+      <h1>Generated toolsets</h1><br/>
+      <p>The best toolset has</p>
+      <p><span class="toolsetStat" id="numberOfTools">0</span><span> tools</span></p>
+      <p><span class="toolsetStat" id="coverage">0</span><span> % of documents covered</span></p>
+      <p><span class="toolsetStat" id="parameters">0</span><span> parameters entered per document</span></p>
+      <input type="checkbox" name="onlyPareto" checked="checked" id="onlyPareto"/>
+      <label for="onlyPareto">&nbsp;only show pareto optimal toolsets</label><br/>
+      <input type="checkbox" name="allowDocuments" checked="checked" id="allowDocuments"/>
+      <label for="allowDocuments">&nbsp;allow documents as tools</label>
+    </div>
+    <div class="sliderContainer" id="sliderContainerB">
+      <input class="slider" type="range" id="sliderB" value="0" min="0" max="100" step="1"/><a class="sliderlabel">Tool set size cost weight</a>
+      <p id="sliderValueB" style="padding-top: 20px"></p>
+    </div>
+    <div class="sliderContainer" id="sliderContainerC">
+      <input class="slider" type="range" id="sliderC" value="0" min="0" max="100" step="1"/><a class="sliderlabel">Not covered cost weight</a>
+      <p id="sliderValueC" style="padding-top: 20px"></p>
+    </div>
+    <div class="sliderContainer" id="sliderContainerA">
+      <input class="slider" type="range" id="sliderA" value="0" min="0" max="100" step="1"/><a class="sliderlabel">Parameter Cost Weight</a>
+      <p id="sliderValueA" style="padding-top: 20px"></p>
+    </div>
+    <div id="chartWrapper" style="z-index: 10000">
+      <div id="chartAreaWrapper">
+        <div id="chartAreaWrapper2">
+          <canvas id="barCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+    <div id="belowChartToolsets" style="width: 100%"></div>
+    <button id="cancelButton">cancel</button>
+    <div id="highlighter"></div>
+  </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
