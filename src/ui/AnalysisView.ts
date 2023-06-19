@@ -10,6 +10,7 @@ import ResultDisplay from "./ResultDisplay";
 import AutoShape from "../dataTypes/AutoShape";
 import SvgDocument from "../dataTypes/SvgDocument";
 import SvgToImage, { AABB2D } from "../uiGenerationShapeMenu/svgToImage";
+import * as pointInPolygon from "point-in-polygon";
 
 const size = 300;
 const svgRenderPadding = 20;
@@ -270,8 +271,7 @@ export default class AnalysisView {
     const polygons = Array.from(pixelSpaceSegmentOutlinesMap.keys());
     const clickPoint = new Vector2(e.offsetX, e.offsetY);
     const clicked = polygons.filter((p) =>
-      // TODO JULIAN: FIND LIBRARY THAT DOES POINT IN POLYGON FOR US
-      pointInPolygon(clickPoint, p)
+      pointInPolygon([clickPoint.x, clickPoint.y], p.map((v) => [v.x, v.y]))
     );
     const indices = clicked.map((c) => polygons.indexOf(c));
     const clickedLineStrips = indices.map((i) => polygons[i]);

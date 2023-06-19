@@ -6,6 +6,8 @@ import SvgToCommands, {
 import AutoShape from "./AutoShape";
 import { AABB2D } from "../uiGenerationShapeMenu/svgToImage";
 import { CoincidentConstraint } from "../algorithm/shapeDetect/constraints/CoincidentConstraint";
+import * as SVGPath from "svgpath";
+import * as AdaptiveLinearization from "adaptive-linearization";
 
 export interface ShapeRepresentation {
   autoShape: AutoShape;
@@ -122,9 +124,27 @@ export default class PathShape {
   public getLineStrips(): Vector2[][] | null {
     if (this.path) {
       // TODO JULIAN: find library that linearizes for us
-      return [linearizeCommandLoop(this.commands)];
+      return [this.linearizeCommandLoop(this.commands)];
     }
     return null;
+  }
+
+  private linearizeCommandLoop( commands: (LineCommand | ArcCommand)[]): Vector2[] {
+    let linearized: Vector2[]  = [];
+
+    function lineConsumer (x1: number, y1: number, x2: number, y2: number, data: number) {
+      linearized.push(new Vector2(x2, y2));
+    }
+
+    // path string cleanup
+    let cleanPath = (this.path as any).replaceAll(",", " ");
+
+    const path = SVGPath(cleanPath).unarc().abs();
+
+    const al = new AdaptiveLinearization(lineConsumer);
+    path.iterate(al.svgPathIterator);
+    
+    return linearized;
   }
 
   public convertToXmlString(color: string = "black"): string {
